@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/cover.jpg">
 <link rel="preload" as="image" href="assets/hero.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Monsieur+La+Doulaise&family=Amiri&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Monsieur+La+Doulaise&family=Pinyon+Script&family=Amiri&display=swap">
 <style>
 :root{--bg:#f5f1ea;--card:#efe8dc;--card2:#f8f4ed;--ink:#2e2a24;--soft:#625c52;--gold:#ab8644;--gold-text:#86662c;--gold2:#cdb384;--line:rgba(171,134,68,.4);
   --body:"Cormorant Garamond","Iowan Old Style",Georgia,serif;--script:"Monsieur La Doulaise","Pinyon Script",cursive;color-scheme:light}
@@ -52,6 +52,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,#c
 #cover.playing .tap{opacity:0;animation:none}
 #cover.playing .cvTop{opacity:0}
 
+/* music toggle */
+.music-toggle{position:fixed;top:max(16px,calc(env(safe-area-inset-top,0px) + 12px));right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));z-index:40;width:38px;height:38px;border-radius:50%;background:rgba(245,241,234,.85);border:1px solid var(--gold);color:var(--gold-text);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(46,42,36,.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .6s ease,transform .2s ease}
+.music-toggle.visible{opacity:1;pointer-events:auto}
+.music-toggle:active{transform:scale(.92)}
+.music-toggle.playing svg{animation:spinMusic 4s linear infinite;transform-origin:center}
+.music-toggle.paused::after{content:'';position:absolute;width:22px;height:1.5px;background:var(--gold-text);transform:rotate(-45deg)}
+@keyframes spinMusic{100%{transform:rotate(360deg)}}
+@media (min-width:480px){.music-toggle{right:calc(50% - 240px + 16px)}}
+
 /* hero */
 .hero{position:relative;min-height:min(100svh,853px);background:#fbeee2 url(assets/hero.png) center/cover no-repeat;text-align:center;display:flex;flex-direction:column;justify-content:center;padding:max(64px,calc(env(safe-area-inset-top,0px) + 44px)) 44px 44px}
 .hero .in{opacity:0;transform:translateY(8px);transition:opacity 1.6s ease,transform 1.6s ease}
@@ -62,8 +71,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,#c
 .mono span{position:absolute;top:0;font:400 92px/1 var(--script);color:var(--gold)}
 .mono span:first-child{left:-36px}
 .mono span:last-child{left:8px;top:10px;color:var(--gold2)}
-.names{font:600 min(23px,5.4vw)/1.2 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text);white-space:nowrap}
-.names em{font:400 min(27px,6.4vw)/1 var(--script);letter-spacing:0;text-transform:none;margin:0 .5em 0 .3em}
+.names{font:400 min(44px,11vw)/1.15 "Pinyon Script",cursive;color:var(--gold-text);white-space:nowrap}
+.names span,.names em{display:block}
+.names em{font:400 .6em/1.2 "Pinyon Script",cursive}
 .hdate{font:500 19px/1.25 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-text);margin-top:6px}
 .hline{font:400 19px/1.4 var(--script);color:var(--soft);margin-top:14px;text-wrap:balance}
 .sprig{width:34px;height:52px;margin:20px auto 0;display:block;color:var(--gold)}
@@ -144,12 +154,19 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,#c
   </div>
 </div>
 
+<audio id="bgm" src="reel.mp3" loop preload="auto"></audio>
+<button class="music-toggle" id="musicToggle" type="button" aria-label="Toggle music" title="Toggle music">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+  </svg>
+</button>
+
 <main>
 <section class="hero" id="hero">
   <div class="bless in" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
   <div class="cap in">By the grace of Allah, together with their families<br>request the honour of your presence at the Shafat of their children</div>
-  <div class="mono in" aria-hidden="true"><span data-t="brideI"></span><span data-t="groomI"></span></div>
-  <div class="names in"><span data-t="bride"></span><em>and</em><span data-t="groom"></span></div>
+  <!-- <div class="mono in" aria-hidden="true"><span data-t="brideI"></span><span data-t="groomI"></span></div> -->
+  <div class="names in" style="margin:26px 0 10px"><span data-t="groomFull"></span><em style="margin:4px 0">and</em><span data-t="brideFull"></span></div>
   <div class="dia in"><i></i><b></b><i></i></div>
   <div class="cap in" data-t="weekday"></div>
   <div class="hdate in" data-t="dateLong"></div>
@@ -236,7 +253,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,#c
 
 <footer class="end pad">
   <div class="mono" aria-hidden="true"><span data-t="brideI"></span><span data-t="groomI"></span></div>
-  <div class="names"><span data-t="bride"></span><em>and</em><span data-t="groom"></span></div>
+  <div class="names"><span data-t="groomFull"></span><em>and</em><span data-t="brideFull"></span></div>
   <div class="cap" style="margin-top:10px" data-t="dateLong"></div>
   <div style="font-style:italic;color:var(--soft);margin-top:10px">With duas, <span data-t="duasFrom"></span></div>
 </footer>
@@ -285,18 +302,93 @@ if(T){
   $('#grid').innerHTML=h;
 }else{$('#countSec').hidden=true;$('#calBox').hidden=true;}
 
-/* cover: tap plays the intro, then fades into the hero */
-const cover=$('#cover'),op=$('#opener'),hero=$('#hero');
+/* cover & audio: tap plays the intro, then fades into the hero; reel.mp3 plays after opening */
+const cover=$('#cover'),op=$('#opener'),hero=$('#hero'),bgm=$('#bgm'),musicToggle=$('#musicToggle');
 document.body.style.overflow='hidden';
-let opened=false,done=false;
-const finish=()=>{if(done)return;done=true;cover.classList.add('gone');document.body.style.overflow='';hero.classList.add('show');setTimeout(reveal,600);};
-const openInvite=()=>{if(opened)return;opened=true;cover.classList.add('playing');
+let opened=false,done=false,userPaused=false;
+
+const startAudio=()=>{
+  bgm.currentTime=0;
+  bgm.volume=1;
+  const p=bgm.play();
+  if(p&&p.then){
+    p.then(()=>{
+      musicToggle.classList.remove('paused');
+      musicToggle.classList.add('playing');
+      musicToggle.setAttribute('aria-label','Pause music');
+    }).catch(()=>{
+      musicToggle.classList.add('paused');
+      musicToggle.classList.remove('playing');
+      musicToggle.setAttribute('aria-label','Play music');
+    });
+  }
+};
+
+const finish=()=>{
+  if(done)return;
+  done=true;
+  cover.classList.add('gone');
+  document.body.style.overflow='';
+  hero.classList.add('show');
+  if(musicToggle)musicToggle.classList.add('visible');
+  startAudio();
+  setTimeout(reveal,600);
+};
+
+const openInvite=()=>{
+  if(opened)return finish();
+  opened=true;
+  cover.classList.add('playing');
+  // Unlock audio during user interaction for mobile browsers
+  bgm.volume=0;
+  const pUnlock=bgm.play();
+  if(pUnlock&&pUnlock.then){
+    pUnlock.then(()=>{
+      if(!done){bgm.pause();bgm.currentTime=0;}
+    }).catch(()=>{});
+  }
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return finish();
-  op.addEventListener('ended',finish,{once:true});op.addEventListener('error',finish,{once:true});
+  op.addEventListener('ended',finish,{once:true});
+  op.addEventListener('error',finish,{once:true});
   setTimeout(finish,12000);
-  const p=op.play();if(p&&p.catch)p.catch(finish);};
+  const p=op.play();if(p&&p.catch)p.catch(finish);
+};
 cover.addEventListener('click',openInvite);
 cover.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openInvite();}});
+
+if(musicToggle){
+  musicToggle.addEventListener('click',()=>{
+    if(bgm.paused){
+      userPaused=false;
+      bgm.play().then(()=>{
+        musicToggle.classList.remove('paused');
+        musicToggle.classList.add('playing');
+        musicToggle.setAttribute('aria-label','Pause music');
+      }).catch(()=>{});
+    }else{
+      userPaused=true;
+      bgm.pause();
+      musicToggle.classList.add('paused');
+      musicToggle.classList.remove('playing');
+      musicToggle.setAttribute('aria-label','Play music');
+    }
+  });
+}
+
+/* stop audio on browser closing / navigating / tab hidden */
+const stopAudio=()=>{if(!bgm.paused)bgm.pause();};
+window.addEventListener('pagehide',stopAudio);
+window.addEventListener('beforeunload',stopAudio);
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){
+    stopAudio();
+  }else if(done&&!userPaused){
+    bgm.play().then(()=>{
+      musicToggle.classList.remove('paused');
+      musicToggle.classList.add('playing');
+    }).catch(()=>{});
+  }
+});
 function reveal(){if(!('IntersectionObserver' in window))return;
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target);}}),{threshold:.12});
   document.querySelectorAll('.rv').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight){el.classList.add('pre');io.observe(el);}});}
