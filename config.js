@@ -15,7 +15,7 @@ window.INVITE = {
   venueShort: "Al Saj International Convention Centre, Kazhakootam",
   address: "Kazhakootam, Trivandrum",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=Al+Saj+International+Convention+Centre+Kazhakootam+Trivandrum",
-  eventName: "Shafat",
+  eventName: "Shafath",
 
   brideParents: "Daughter of Mr. Sayede & Mrs. Jaseera Sayede",
   brideHome: "Maampoovil, Mankonam, Madavoor, Pallickal, Trivandrum",
@@ -29,6 +29,6 @@ window.INVITE = {
   rsvpWhatsApp: "",
 
   /* Add photos to assets/, e.g. "assets/couple.jpg". Portrait is the arch photo; gallery takes 4. */
-  portrait: "assets/img3.jpg",
-  gallery: ["assets/img1.jpg", "assets/img2.jpg", "assets/img3.jpg", "assets/img4.jpg"]
+  portrait: "assets/img5.jpeg",
+  gallery: ["assets/img1.jpg", "assets/img2.jpeg", "assets/img3.jpeg", "assets/img4.jpeg"]
 };
