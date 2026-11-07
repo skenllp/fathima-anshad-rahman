@@ -29,6 +29,6 @@ window.INVITE = {
   rsvpWhatsApp: "",
 
   /* Add photos to assets/, e.g. "assets/couple.jpg". Portrait is the arch photo; gallery takes 4. */
-  portrait: "assets/img5.jpeg",
+  portrait: "assets/img7.jpeg",
   gallery: ["assets/img1.jpg", "assets/img2.jpeg", "assets/img3.jpeg", "assets/img4.jpeg"]
 };
