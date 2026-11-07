@@ -164,7 +164,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,#c
 <main>
 <section class="hero" id="hero">
   <div class="bless in" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-  <div class="cap in">By the grace of Allah, together with their families<br>request the honour of your presence at the Shafat of their children</div>
+  <div class="cap in">BY THE GRACE OF ALLAH,
+INVITE YOU TO WITNESS AND BLESS THE BEGINNING OF A BEAUTIFUL JOURNEY OF LOVE AND TOGETHERNESS.</div>
   <!-- <div class="mono in" aria-hidden="true"><span data-t="brideI"></span><span data-t="groomI"></span></div> -->
   <div class="names in" style="margin:26px 0 10px"><span data-t="groomFull"></span><em style="margin:4px 0">and</em><span data-t="brideFull"></span></div>
   <div class="dia in"><i></i><b></b><i></i></div>
@@ -217,9 +218,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,#c
 <section class="sec pad rv" style="padding-top:20px">
   <div class="gcap">Two families</div><h2>With Their Blessings</h2>
   <div class="fam">
+     <div class="c"><div class="gcap">The groom</div><div class="nm" data-t="groomFull"></div><div data-t="groomParents"></div><div class="of" data-t="groomHome"></div></div>
     <div class="c"><div class="gcap">The bride</div><div class="nm" data-t="brideFull"></div><div data-t="brideParents"></div><div class="of" data-t="brideHome"></div></div>
-    <div class="c"><div class="gcap">The groom</div><div class="nm" data-t="groomFull"></div><div data-t="groomParents"></div><div class="of" data-t="groomHome"></div></div>
-  </div>
+   </div>
 </section>
 
 <section class="sec pad rv">
@@ -331,7 +332,6 @@ const finish=()=>{
   document.body.style.overflow='';
   hero.classList.add('show');
   if(musicToggle)musicToggle.classList.add('visible');
-  startAudio();
   setTimeout(reveal,600);
 };
 
@@ -339,14 +339,8 @@ const openInvite=()=>{
   if(opened)return finish();
   opened=true;
   cover.classList.add('playing');
-  // Unlock audio during user interaction for mobile browsers
-  bgm.volume=0;
-  const pUnlock=bgm.play();
-  if(pUnlock&&pUnlock.then){
-    pUnlock.then(()=>{
-      if(!done){bgm.pause();bgm.currentTime=0;}
-    }).catch(()=>{});
-  }
+  // Start the song from the beginning on the same tap (user gesture unlocks audio)
+  startAudio();
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return finish();
   op.addEventListener('ended',finish,{once:true});
   op.addEventListener('error',finish,{once:true});
